@@ -1,0 +1,42 @@
+     - name: Create VPC and Subnet
+       ec2_vpc:
+         state: present
+         region: ap-southeast-1
+         cidr_block: 10.0.0.0/16
+         subnets:
+           - cidr: 10.0.33.0/24
+             resource_tags: {"Name":"Private Subnet"}
+           - cidr: 10.0.44.0/24
+             resource_tags: {"Name":"Public Subnet"}
+         route_tables:
+           - subnets:
+             - 10.0.44.0/24
+             routes:
+               - dest: 0.0.0.0/0
+                 gw: igw
+         wait: yes
+         internet_gateway: yes
+         resource_tags:
+          Name: "WIO Build Centre"
+       register: vpc
+
+     - name: get igw
+       ec2_vpc_igw:
+          vpc_id: "{{ vpc.vpc_id }}"
+          region: ap-southeast-1
+          state: present
+       register: igw
+
+     - name: Find the first public subnet
+       set_fact: pub_sub_id="{{ item.id }}"
+       when: item.resource_tags.Name == "Public Subnet"
+       with_items: "{{ vpc.subnets }}"
+       register: subnetid
+
+     - name: Create new nat gateway and allocate new EIP
+       ec2_vpc_nat_gateway:
+          state: present
+          subnet_id: "{{ pub_sub_id }}"
+          region: ap-southeast-1
+          wait: yes
+       register: vpc_nat_gateway

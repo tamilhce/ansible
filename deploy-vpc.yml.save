@@ -1,0 +1,9 @@
+---
+- name: Deploy Jenkins
+  hosts: 
+  become: yes
+  become_method: sudo
+  become_user: root
+      
+  roles:
+    - emmetog.jenkins

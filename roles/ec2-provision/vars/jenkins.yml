@@ -1,0 +1,14 @@
+---
+
+count: "1"
+volume-size: "100"
+instance_type: "m4.large"
+image: "ami-6f198a0c"
+region: "ap-southeast-1"
+keypair: "build-pair"
+group_id: "sg-9cbb5cfa"
+volumes: "vol-0f81e1fceb351ec55"
+name: "Jenkins Build server"
+vpc_subnet_id: "subnet-029a9d74"
+assign_public_ip: "no"
+

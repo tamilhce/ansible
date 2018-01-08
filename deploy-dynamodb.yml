@@ -1,0 +1,8 @@
+---
+-  name: To create DynamoDB Table
+   hosts: "localhost"
+   connection: "local"
+   vars_files:
+    - "roles/dynamodb-provision/vars/{{ vars_file }}.yml"
+   roles:
+    - dynamodb-provision

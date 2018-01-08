@@ -1,0 +1,18 @@
+---
+- name: EC2 Provisioning
+  ec2:
+    keypair: "{{ keypair}}"
+    group_id: "{{ group_id }}"
+    region: "{{ region }}"
+    instance_type: "{{ instance_type }}"
+    image: "{{ image }}"
+    wait: yes
+    volumes:
+      - device_name: /dev/xvda
+        volume_type: gp2
+        volume_size: 50
+    vpc_subnet_id: "{{ vpc_subnet_id }}"
+    assign_public_ip: "{{ assign_public_ip }}"
+    count: "{{ count }}"
+    instance_tags:
+        Name: "{{ name }}" 

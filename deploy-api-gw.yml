@@ -1,0 +1,17 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars:
+    state: present
+    api_gw_spec_file: test.yml
+
+  tasks:
+  - name: AWS API Gateway
+    aws_api_gateway:
+      state: "{{ state | default('present') }}"
+      api_id: '*'
+      deploy_api: True
+      swagger_spec: "{{ api_gw_spec_file }}"
+
+  - name: show results
+    debug: var=api_gw_facts

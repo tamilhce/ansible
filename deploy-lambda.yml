@@ -1,0 +1,8 @@
+---
+-  name: To create EC2 Instance
+   hosts: "localhost"
+   connection: "local"
+#   vars_files:
+#    - "roles/ec2-provision/vars/{{ vars_file }}.yml"
+   roles: 
+    - lambda-provision

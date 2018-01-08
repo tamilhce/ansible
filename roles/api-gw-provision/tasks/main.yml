@@ -1,0 +1,9 @@
+
+  - name: AWS API Gateway
+    api_gw:
+      state: present
+      api_id: '*'
+      swagger_spec: test.yml
+
+  - name: show results
+    debug: var=api_gw_facts

@@ -1,0 +1,21 @@
+---
+
+jenkins_configure_security: |
+    import hudson.security.*
+
+    def instance = Jenkins.getInstance()
+    def hudsonRealm = new HudsonPrivateSecurityRealm(false)
+
+    hudsonRealm.createAccount('admin','password')
+    instance.setSecurityRealm(hudsonRealm)
+
+    def strategy = new hudson.security.ProjectMatrixAuthorizationStrategy()
+    
+    strategy.add(Jenkins.ADMINISTER, 'admin')
+    strategy.add(hudson.model.Item.READ, 'anonymous')
+    strategy.add(hudson.model.Hudson.READ, 'anonymous')
+
+    instance.setAuthorizationStrategy(strategy)
+
+    instance.save()
+

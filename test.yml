@@ -1,0 +1,353 @@
+{
+
+  "swagger": "2.0",
+
+  "info": {
+
+    "title": "CWMPLambda-API",
+
+    "description": "Waves.io API to provisioning the Access Point and other user level communication  through a Java Lambda Function...",
+
+    "version": "1.0.0"
+
+  },
+
+  "host": "api.waves.io",
+
+  "schemes": [
+
+    "https"
+
+  ],
+
+  "basePath": "/",
+
+  "produces": [
+
+    "application/json"
+
+  ],
+
+  "paths": {
+
+    "/conreq": {
+
+      "get": {
+
+        "summary": "Connection Request Endpoint for ACS",
+
+        "description": "Connection Request Endpoint for ACS",
+
+        "consumes": [
+
+          "application/json"
+
+        ],
+
+        "produces": [
+
+          "application/json"
+
+        ],
+
+        "parameters": [
+
+          {
+
+            "name": "deviceID",
+
+            "in": "query",
+
+            "description": "device id",
+
+            "type": "String"
+
+          }
+
+        ],
+
+        "tags": [
+
+          "CWMPLambda"
+
+        ],
+
+        "x-amazon-apigateway-integration": {
+
+          "type": "aws",
+
+          "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:528719264515:function:CWMPLambda/invocations",
+
+          "credentials": "arn:aws:iam::528719264515:role/CWMP_Lambda_Role",
+
+          "httpMethod": "POST",
+
+          "requestTemplates": {
+
+            "application/json": "{\n  \"action\" : \"connectionRequest\",\n  \"body\" :{\n\"deviceID\" :  \"$input.params('deviceID')\" \n }\n}"
+
+          },
+
+          "responses": {
+
+            "default": {
+
+              "statusCode": "200",
+
+              "responseParameters": {
+
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+
+              }
+
+            },
+
+            "BAD.*": {
+
+              "statusCode": "400",
+
+              "responseParameters": {
+
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+
+              }
+
+            },
+
+            "INT.*": {
+
+              "statusCode": "500",
+
+              "responseParameters": {
+
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+
+              }
+
+            }
+
+          }
+
+        },
+
+        "responses": {
+
+          "200": {
+
+            "description": "The response of the validation",
+
+            "headers": {
+
+              "Access-Control-Allow-Origin": {
+
+                "type": "string"
+
+              }
+
+            },
+
+            "schema": {
+
+              "$ref": "#/definitions/ConnectionRequest"
+
+            }
+
+          },
+
+          "400": {
+
+            "description": "Bad request",
+
+            "headers": {
+
+              "Access-Control-Allow-Origin": {
+
+                "type": "string"
+
+              }
+
+            },
+
+            "schema": {
+
+              "$ref": "#/definitions/Error"
+
+            }
+
+          },
+
+          "500": {
+
+            "description": "Internal error",
+
+            "headers": {
+
+              "Access-Control-Allow-Origin": {
+
+                "type": "string"
+
+              }
+
+            },
+
+            "schema": {
+
+              "$ref": "#/definitions/Error"
+
+            }
+
+          }
+
+        }
+
+      },
+
+      "options": {
+
+        "summary": "CORS support",
+
+        "description": "Enable CORS by returning correct headers\n",
+
+        "consumes": [
+
+          "application/json"
+
+        ],
+
+        "produces": [
+
+          "application/json"
+
+        ],
+
+        "tags": [
+
+          "CORS"
+
+        ],
+
+        "x-amazon-apigateway-integration": {
+
+          "type": "mock",
+
+          "requestTemplates": {
+
+            "application/json": "{\n  \"statusCode\" : 200\n}\n"
+
+          },
+
+          "responses": {
+
+            "default": {
+
+              "statusCode": "200",
+
+              "responseParameters": {
+
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'",
+
+                "method.response.header.Access-Control-Allow-Methods": "'*'",
+
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+
+              },
+
+              "responseTemplates": {
+
+                "application/json": "{}\n"
+
+              }
+
+            }
+
+          }
+
+        },
+
+        "responses": {
+
+          "200": {
+
+            "description": "Default response for CORS method",
+
+            "headers": {
+
+              "Access-Control-Allow-Headers": {
+
+                "type": "string"
+
+              },
+
+              "Access-Control-Allow-Methods": {
+
+                "type": "string"
+
+              },
+
+              "Access-Control-Allow-Origin": {
+
+                "type": "string"
+
+              }
+
+            }
+
+          }
+
+        }
+
+      }
+
+    }
+
+  },
+
+  "definitions": {
+
+    "ConnectionRequest": {
+
+      "properties": {
+
+        "deviceID": {
+
+          "type": "string",
+
+          "description": "Device ID"
+
+        }
+
+      }
+
+    },
+
+    "Error": {
+
+      "properties": {
+
+        "code": {
+
+          "type": "integer",
+
+          "format": "int32"
+
+        },
+
+        "message": {
+
+          "type": "string"
+
+        },
+
+        "fields": {
+
+          "type": "string"
+
+        }
+
+      }
+
+    }
+
+  }
+
+}

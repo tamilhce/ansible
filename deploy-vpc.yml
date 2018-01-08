@@ -1,0 +1,7 @@
+---
+-  name: To create vpc, private subnet and attach it to nat and public subnet and attach it to internet gateway
+   hosts: "localhost"
+   connection: "local"
+   roles: 
+    - vpc-subnet
+

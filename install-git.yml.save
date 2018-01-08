@@ -1,0 +1,9 @@
+---
+- name: Configure CI server
+  hosts: ci-server
+  sudo: True
+  tasks:
+    - name: install git only if it is not already installed
+      apt:
+        name=git
+        state=present

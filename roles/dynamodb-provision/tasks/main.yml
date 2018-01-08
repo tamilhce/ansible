@@ -1,0 +1,11 @@
+---
+
+- dynamodb_table:
+    name: "{{ name }}"
+    region: "{{ region }}"
+    hash_key_name: "{{ hash_key_name }}"
+    hash_key_type: "{{ hash_key_type }}"
+    range_key_name: "{{ range_key_name }}"
+    range_key_type: "{{ range_key_type }}"
+    read_capacity: "{{ read_capacity }}"
+    write_capacity: "{{ read_capacity }}"

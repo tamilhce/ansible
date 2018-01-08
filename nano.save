@@ -1,0 +1,5 @@
+name: install-git
+  hosts: build
+  sudo: True
+  roles:
+    - git

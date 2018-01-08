@@ -1,0 +1,8 @@
+---
+- name: Install Git
+  hosts: build
+  become: yes
+  become_method: sudo
+  gather_facts: no
+  roles:
+    - git

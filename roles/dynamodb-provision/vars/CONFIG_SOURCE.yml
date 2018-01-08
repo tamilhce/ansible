@@ -1,0 +1,8 @@
+name: CONFIG_SOURCE_TEST
+region: us-east-1
+hash_key_name: DEVICE_ID
+hash_key_type: STRING
+range_key_name: DG_ID
+range_key_type: NUMBER
+read_capacity: 2
+write_capacity: 2

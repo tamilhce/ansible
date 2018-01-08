@@ -1,0 +1,16 @@
+---
+
+- name: Lambda Deployment
+  lambda:
+    name: 'CWMPLambda'
+    region: us-east-1
+    state: present
+    s3_bucket: 'deploy-lambda-image'
+    s3_key: 'cwmpLambda-0.0.1.jar'
+    runtime: 'java8'
+    role: 'arn:aws:iam::528719264515:role/RestAPI_Lambda_Role'
+    handler: 'com.bayonette.wio.cwmp.handler.ConnectionRequestHandler::handleRequest'
+    timeout: 15
+    memory_size: 512
+    environment_variables:
+     REGION: us-east-1
